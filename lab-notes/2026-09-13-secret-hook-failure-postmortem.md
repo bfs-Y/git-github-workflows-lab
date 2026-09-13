@@ -1,5 +1,23 @@
 # Postmortem: I wrote the hook after the mistake it was supposed to catch
 
+> **CORRECTION (2026-09-13, later same day):** everything below this
+> notice is wrong about the timeline, and I'm leaving it in place rather
+> than deleting it because being wrong three times in a row before finding
+> the actual record is itself the lesson. `lab-notes/2026-07-31-phase0.md`
+> — a file that existed the entire time and was never checked while
+> writing this — shows the hook was tested and genuinely worked that same
+> night, against a file called `test-secret2.env`, hours after `ff0cbae`.
+> The `ff0cbae` "test if hook blocks secret" commit wasn't a hook that
+> hadn't been written yet — it was a **false-positive test**: the hook
+> script existed but hadn't actually saved due to a nano quirk, so nothing
+> was really being tested. That was caught the same night, the hook was
+> rewritten using `cat > file << EOF` instead of nano, and re-verified
+> working against `test-secret2.env`. So the hook was proven six weeks
+> *before* tonight, not six weeks of sitting untested as this file claims
+> below. See the corrected timeline in `ROADMAP.md`.
+
+---
+
 ## What happened
 
 On 2026-07-31, I committed a small env file containing a fake credential

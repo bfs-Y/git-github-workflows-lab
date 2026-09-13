@@ -10,9 +10,12 @@ assumed to work. See `lab-notes/` for the evidence behind any "done" status.
 | Item | Status | Notes |
 |---|---|---|
 | `.gitignore` | done | Added 2026-09-13, covers common secret-shaped file patterns. |
-| Pre-commit secret-scanning hook | done, proven | Existed since 2026-07-31 but was never tested — written 2 minutes *after* the incident it was meant to catch. Had two real bugs (blocked deletions, then a syntax error from the first fix) both found and fixed 2026-09-13. Proven working against a fresh test commit same day. Full writeup: `lab-notes/2026-09-13-secret-hook-failure-postmortem.md`. |
+| Pre-commit secret-scanning hook | done, proven | **Corrected timeline (2026-09-13):** proven working on 2026-07-31, the same night it was written — a false-positive first test (`ff0cbae`, hook script hadn't actually saved due to a nano quirk) was caught and fixed same-session, then the rewritten hook correctly blocked `test-secret2.env`. Two additional real bugs (blocked deletions, then a syntax error from that fix) were found and fixed on 2026-09-13 while revisiting this six weeks later. Full history across `lab-notes/2026-07-31-phase0.md` and `lab-notes/2026-09-13-secret-hook-failure-postmortem.md` (see correction notice at top of that file). |
 | Branch protection baseline | not started | README scope calls for this in phase-0; not yet configured on GitHub. |
-| `/lab-notes` format established | in progress | Two entries exist (2026-07-31, 2026-09-13). Format is consistent but not yet written down as a template. |
+| `/lab-notes` format established | in progress | Two entries exist (2026-07-31, 2026-09-13), consistent shape, not yet written down as a template. |
+| Whether `.git/hooks/pre-commit` travels with a clone | resolved (2026-09-13) | It does not — hooks are never tracked by git. This was an open question in `lab-notes/2026-07-31-phase0.md`, never explicitly answered until now. Implication: anyone cloning this repo does NOT get the secret-scanning hook automatically; it would need to be distributed separately (e.g. a setup script, or a tool like `pre-commit` framework) if this guardrail is meant to protect more than just this one local checkout. |
+| `test-secret2.env` disposition | not resolved | Left staged and undecided in the 2026-07-31 session (delete/unstage/keep). Status as of tonight unconfirmed — check `git status` and decide. |
+| Which auth mechanism authenticated pushes on 2026-07-31 | not resolved | Flagged as unresolved in `lab-notes/2026-07-31-phase0.md` (token vs. something else), never answered. |
 
 ## phase-1-branching-strategy
 
@@ -60,8 +63,18 @@ assumed to work. See `lab-notes/` for the evidence behind any "done" status.
 
 - Branch protection baseline (part of phase-0's own stated scope) is not
   yet configured.
-- Phases 1 through 6 are entirely unstarted — only phase-0 has real,
-  evidence-backed work behind it.
-- No `/lab-notes` entry template exists yet, despite two entries already
-  following a consistent shape by hand. Worth formalizing before phase-1
-  starts generating more.
+- Phases 1 through 7 now have the full break/fix/harden/postmortem/test-log
+  scaffold, but no content — only phase-0 has real, evidence-backed work
+  behind it.
+- No `/lab-notes` entry template exists yet, despite entries following a
+  consistent shape by hand.
+- `test-secret2.env`'s disposition from 2026-07-31 was never resolved —
+  confirm current `git status` and decide.
+- Which auth mechanism authenticated pushes on 2026-07-31 was never
+  answered.
+- This ROADMAP's own phase-0 history was wrong as of the first version
+  written earlier tonight (2026-09-13) — corrected after actually reading
+  `lab-notes/2026-07-31-phase0.md`, which had existed the whole time. See
+  the correction notice in `lab-notes/2026-09-13-secret-hook-failure-postmortem.md`
+  for the full account of getting this wrong three times before checking
+  the source.
