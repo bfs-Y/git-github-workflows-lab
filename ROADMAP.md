@@ -5,6 +5,17 @@ Status legend: `not started` / `in progress` / `done`.
 fresh attempt at the mistake it's meant to catch — not just built and
 assumed to work. See `lab-notes/` for the evidence behind any "done" status.
 
+**Note on break/fix/harden shape across phases:** the methodology stays
+identical everywhere, but what "break" means will look different depending
+on the phase. Technical phases (0-foundation, 6-git-bisect) tend to have a
+literal, crisp break/fix/harden — a real bug, a real fix, a real guardrail
+script. Process/judgment phases (1-branching-strategy, 3-pr-discipline)
+will have a softer version — e.g. "break" might mean picking the wrong
+strategy for a scenario or writing a genuinely bad PR description, "fix"
+is choosing correctly and explaining why, "harden" might be a PR template
+or documented decision rule rather than a script. This is expected, not a
+sign those phases are being done wrong.
+
 ## phase-0-foundation
 
 | Item | Status | Notes |
