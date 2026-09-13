@@ -68,8 +68,7 @@ assumed to work. See `lab-notes/` for the evidence behind any "done" status.
   consistent shape by hand.
 - `test-secret2.env`'s disposition from 2026-07-31 was never resolved —
   confirm current `git status` and decide.
-- Which auth mechanism authenticated pushes on 2026-07-31 was never
-  answered.
+- | Which auth mechanism authenticated pushes on 2026-07-31 | resolved (2026-09-13) | HTTPS remote confirmed (`git config --get remote.origin.url`). Authentication is via personal access token, not account password — GitHub hasn't accepted account passwords for git-over-HTTPS in years. `credential.helper` is unset, confirmed via `git config --get credential.helper` returning nothing — meaning the token is retyped fresh on every push, not cached anywhere on disk. Worth deciding: set up a credential helper for convenience (accepts the tradeoff of a cached token on disk), or keep it deliberately uncached for security. Not a bug either way, just an undocumented choice until now. |
 - This ROADMAP's own phase-0 history was wrong as of the first version
   written earlier tonight (2026-09-13) — corrected after actually reading
   `lab-notes/2026-07-31-phase0.md`, which had existed the whole time. See
